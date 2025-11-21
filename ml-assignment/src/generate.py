@@ -1,16 +1,23 @@
-from ngram_model import TrigramModel
+import random
+from pathlib import Path
+
+try:
+    from src.ngram_model import TrigramModel
+except ModuleNotFoundError:
+    from ngram_model import TrigramModel
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+DATA_PATH = BASE_DIR / "data" / "example_corpus.txt"
 
 def main():
-    # Create a new TrigramModel
     model = TrigramModel()
-
-    # Train the model on the example corpus
-    with open("data/example_corpus.txt", "r") as f:
+    
+    with open(DATA_PATH, "r", encoding="utf-8") as f:
         text = f.read()
+    
     model.fit(text)
-
-    # Generate new text
     generated_text = model.generate()
+    
     print("Generated Text:")
     print(generated_text)
 
